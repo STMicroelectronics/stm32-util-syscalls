@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "version": "0.0.1",
+  "componentid": "::Utility:STM32CubeMX2 Config:syscalls",
+  "type": "object",
+  "grammarVersion": "3.8.0",
+  "license": "Copyright (c) 2026 STMicroelectronics",
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "object",
+          "title": "General information",
+          "properties": {
+            "description": {
+              "title": "Utility description",
+              "type": "string",
+              "actions": [
+                  {
+                      "type": "disable",
+                      "condition": "true"
+                  }
+              ],
+              "default": "The syscalls utility provide minimal newlib/GCC integration with core syscall stubs and protected heap management for safe dynamic memory and standard library use."
+            }
+          }
+        },
+        "basic": {
+          "title": "Main features",
+          "type": "object",
+          "properties": {
+            "syscalls": {
+              "title": "Syscalls ",
+              "type": "object",
+              "properties": {
+                "syscalls_usage_pattern": {
+                  "title": "Select the usage pattern",
+                  "type": "string",
+                  "default": "Standalone",
+                  "oneOf": [
+                    {
+                      "title": "Standalone",
+                      "const": "Standalone"
+                    },
+                    {
+                      "title": "Template",
+                      "const": "Template"
+                    }
+                  ],
+                  "description": "Select standalone (ready) or template (customizable) syscalls pattern."
+                }
+              }
+            },
+            "sysmem": {
+              "title": "Sysmem ",
+              "type": "object",
+              "properties": {
+                "sysmem_usage_pattern": {
+                  "title": "Select the usage pattern",
+                  "type": "string",
+                  "default": "Standalone",
+                  "oneOf": [
+                    {
+                      "title": "Standalone",
+                      "const": "Standalone"
+                    },
+                    {
+                      "title": "Template",
+                      "const": "Template"
+                    }
+                  ],
+                  "description": "Select standalone (ready) or template (customizable) sysmem pattern."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

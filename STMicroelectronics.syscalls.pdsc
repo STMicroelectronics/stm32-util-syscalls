@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stm32="https://developer.st.com/schemas/stm32cube/1.0.0" schemaVersion="1.7.55" xsi:noNamespaceSchemaLocation="PACK.xsd" xsi:schemaLocation="https://developer.st.com/schemas/stm32cube/1.0.0 stm32cube.xsd" Dvendor="STMicroelectronics:13" Dname="STM32*">
+  <vendor>STMicroelectronics</vendor>
+  <name>syscalls</name>
+  <environments>
+    <environment name="STM32Cube">
+      <stm32:pack type="UTILITY" friendlyName="syscalls" shortDesc="syscalls utility">
+        <relocation-info parent="utilities" layer="" element=""/>
+        <compatibility>
+          <release version="2.0.0">
+            <applicable-schema schemaType="sw-configuration" schemaVersion="3.8.0"/>
+            <applicable-api-group apiType="codegen-getters">
+              <applicable-api apiType="clockAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="DmaAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="EnvVarAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="ExtiAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="hwPlatformAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="NvicAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="peripheralsResourceManagerAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="pinoutAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="SWConfigurationAPI" apiVersion="1.0.0"/>
+              <applicable-api apiType="SWProjectAPI" apiVersion="1.0.0"/>
+            </applicable-api-group>
+          </release>
+        </compatibility>
+      </stm32:pack>
+    </environment>
+  </environments>
+  <ECCN>
+    <ECCN-EU>NEC</ECCN-EU>
+    <ECCN-US>EAR99</ECCN-US>
+  </ECCN>
+  <description>System calls stubs for newlib</description>
+  <url>https://developer.st.com/st-pack-server/api/v1/pack/</url>
+  <supportContact>https://community.st.com/</supportContact>
+  <repository type="git">https://github.com/STMicroelectronics/stm32-util-syscalls</repository>
+  <license>LICENSE.md</license>
+  <changelogs>
+    <changelog id="Release Notes" name="Release_Notes.html"/>
+  </changelogs>
+  <releases>
+    <release version="2.0.0" date="2026-03-13">
+      Refer to Release_Notes.html for release details.
+    </release>
+  </releases>
+  <keywords>
+    <keyword>STMicroelectronics</keyword>
+    <keyword>ST</keyword>
+    <keyword>STM32</keyword>
+    <keyword>utility</keyword>
+    <keyword>libc</keyword>
+    <keyword>syscalls</keyword>
+    <keyword>sysmem</keyword>
+    <keyword>_read</keyword>
+    <keyword>_write</keyword>
+    <keyword>_sbrk</keyword>
+    <keyword>malloc</keyword>
+    <keyword>printf</keyword>
+    <keyword>scanf</keyword>
+  </keywords>
+  <conditions>
+    <condition id="GCC">
+      <description>newlib, usually linked by GCC compilers</description>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="GCC + linker scripts">
+      <description>STMicroelectronics' default linker scripts + newlib</description>
+      <require Tcompiler="GCC"/>
+      <require Cclass="Device" Cgroup="Startup"/>
+    </condition>
+    <condition id="Syscalls Config">
+      <description>STMicroelectronics Utility Syscalls Config</description>
+    </condition>
+  </conditions>
+  <generators>
+    <!-- This generator is launched if any component referencing this generator by 'id' is selected and the specified <gpdsc> file does not exist -->
+    <generator id="syscalls_mx2codegen">
+      <description>ST Microelectronics: STM32 Cube Code Generator for utility Syscalls Pack</description>
+      <exe>
+        <command host="win">.config/gen_code.bat</command>
+        <command host="linux">.config/gen_code.sh</command>
+        <command host="mac">.config/gen_code.sh</command>
+        <!-- passing the generator name-->
+        <argument>syscalls_mx2codegen</argument>
+        <argument>$G</argument>
+        <!-- #name of the gpdsc template contained in this PACK and aligned with GPDSC name-->
+        <argument>STMicroelectronics.syscalls.gpdsc.hbs</argument>
+        <!-- Flag to indicate that this Generator is dry-run capable -->
+        <argument mode="dry-run">--dry-run</argument>
+      </exe>
+      <!-- <workingDir>$P</workingDir> -->
+      <!-- path is specified either absolute or relative to PDSC or GPDSC file. If not specified it is the project directory configured by the environment  -->
+      <gpdsc name="$P/STMicroelectronics.syscalls.gpdsc"/>
+    </generator>
+  </generators>
+  <components>
+    <component Cclass="Utility" Cgroup="syscalls" Cvariant="Template syscalls" Cversion="1.0.0">
+      <description>newlib syscalls stubs: minimal dummy implementation.</description>
+      <files>
+        <file category="doc" name="README.md" condition="GCC"/>
+        <file category="doc" name="SW_Security_Level.md" condition="GCC"/>
+        <file category="source" name="syscalls.c" attr="config" version="1.0.0" condition="GCC"/>
+      </files>
+    </component>
+    <component Cclass="Utility" Cgroup="syscalls" Cvariant="Standalone syscalls" Cversion="1.0.0" isDefaultVariant="true">
+      <description>newlib syscalls stubs: minimal dummy implementation.</description>
+      <files>
+        <file category="doc" name="README.md" condition="GCC"/>
+        <file category="doc" name="SW_Security_Level.md" condition="GCC"/>
+        <file category="source" name="syscalls.c" condition="GCC"/>
+      </files>
+    </component>
+    <component Cclass="Utility" Cgroup="sysmem" Cvariant="Standalone sysmem" Cversion="1.0.0" isDefaultVariant="true">
+      <description>Simple memory pool management for newlib malloc.</description>
+      <files>
+        <file category="source" name="sysmem.c" condition="GCC + linker scripts"/>
+      </files>
+    </component>
+    <component Cclass="Utility" Cgroup="sysmem" Cvariant="Template sysmem" Cversion="1.0.0">
+      <description>Simple memory pool management for newlib malloc.</description>
+      <files>
+        <file category="source" name="sysmem.c" attr="config" version="1.0.0" condition="GCC + linker scripts"/>
+      </files>
+    </component>
+    <component generator="syscalls_mx2codegen" Cclass="Utility" Cgroup="STM32CubeMX2 Config" Csub="syscalls" Cversion="1.0.0" condition="Syscalls Config">
+      <description> Code Generation for utility Syscalls</description>
+      <environments>
+        <environment name="STM32Cube">
+          <stm32:component>
+            <utility-entry-point id="Syscalls" name="Syscalls" category="System Utility"/>
+          </stm32:component>
+        </environment>
+      </environments>
+      <files>
+        <file category="genAsset" name=".config/gen_code.bat"/>
+        <file category="genAsset" name=".config/gen_code.sh"/>
+        <file category="genAsset" name=".config/syscalls_config_parameters.json"/>
+        <file category="genAsset" name=".config/STMicroelectronics.syscalls.gpdsc.hbs"/>
+        <!-- License files -->
+        <file category="genAsset" name=".config/template/partials/LICENSE_partial.hbs"/>
+        <file category="genAsset" name=".config/template/license/mx_syscalls_license_template.md.hbs"/>
+      </files>
+    </component>
+  </components>
+</package>
